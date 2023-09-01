@@ -6,6 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
+import java.util.List;
+
+import com.vini.duck.demo.Model.ProgrammingLanguages;
 
 @Entity
 public class Duck {
@@ -19,7 +22,8 @@ public class Duck {
 	@Size (min = MIN_CHARACTERS, message = "O nome deve ter no mínimo " + MIN_CHARACTERS + " caracteres")
 	private String name;
 
-	private String programmingLanguage;
+	@ManyToMany(mappedBy = "ducks")
+	private List<ProgrammingLanguages> programmingLanguages;
 
 	public Long getId () {
 		return this.id;
@@ -37,11 +41,11 @@ public class Duck {
 		this.name = name;
 	}
 
-	public String getProgrammingLanguage () {
+	public List<ProgrammingLanguages> getProgrammingLanguage () {
 		return this.programmingLanguage;
 	}
 
-	public void setProgrammingLanguage (String programmingLanguage) {
+	public void setprogrammingLanguages (List<ProgrammingLanguages> programmingLanguage) {
 		this.programmingLanguage = programmingLanguage;
 	}
 }
