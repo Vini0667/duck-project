@@ -1,14 +1,16 @@
 package com.vini.duck.demo.Model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
-
-import com.vini.duck.demo.Model.ProgrammingLanguages;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Duck {
@@ -22,7 +24,8 @@ public class Duck {
 	@Size (min = MIN_CHARACTERS, message = "O nome deve ter no mínimo " + MIN_CHARACTERS + " caracteres")
 	private String name;
 
-	@ManyToMany(mappedBy = "ducks")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable (name = "duck_languages", joinColumns = @JoinColumn(name = "duck_id"), inverseJoinColumns = @JoinColumn(name = "programming_languages_id"))
 	private List<ProgrammingLanguages> programmingLanguages;
 
 	public Long getId () {
@@ -41,11 +44,11 @@ public class Duck {
 		this.name = name;
 	}
 
-	public List<ProgrammingLanguages> getProgrammingLanguage () {
-		return this.programmingLanguage;
+	public List<ProgrammingLanguages> getProgrammingLanguages() {
+		return programmingLanguages;
 	}
 
-	public void setprogrammingLanguages (List<ProgrammingLanguages> programmingLanguage) {
-		this.programmingLanguage = programmingLanguage;
+	public void setProgrammingLanguages(List<ProgrammingLanguages> programmingLanguages) {
+		this.programmingLanguages = programmingLanguages;
 	}
 }
