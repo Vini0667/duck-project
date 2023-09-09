@@ -14,14 +14,12 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Duck {
-	private final int MIN_CHARACTERS = 3;
-
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank (message = "O nome deve ser informado")
-	@Size (min = MIN_CHARACTERS, message = "O nome deve ter no mínimo " + MIN_CHARACTERS + " caracteres")
+	@Size (min = 3, message = "O nome deve ter no mínimo 3 caracteres")
 	private String name;
 
 	@ManyToMany(fetch = FetchType.EAGER)

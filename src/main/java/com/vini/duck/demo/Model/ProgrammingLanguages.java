@@ -2,7 +2,6 @@ package com.vini.duck.demo.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -12,17 +11,22 @@ import java.util.List;
 
 @Entity
 public class ProgrammingLanguages {
-    private final int MIN_CHARACTERS = 3;
     @Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank (message = "O nome deve ser informado")
-	@Size (min = MIN_CHARACTERS, message = "O nome deve ter no mínimo " + MIN_CHARACTERS + " caracteres")
     private String name;
 
 	@ManyToMany(mappedBy = "programmingLanguages", fetch = FetchType.EAGER)
     private List<Duck> ducks;
+
+
+    public ProgrammingLanguages (String name) {
+        this.name = name;
+    }
+
+    public ProgrammingLanguages() {}    
 
     public Long getId() {
         return id;
