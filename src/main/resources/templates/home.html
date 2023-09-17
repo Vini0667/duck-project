@@ -16,6 +16,27 @@
                     <a th:href="@{/new_duck}" class="btn btn-primary"> Novo Pato </a>
                 </div>
             </div>
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th> Id </th>
+                            <th> Name </th>
+                            <th> Programing Language </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${duckList.empty}">
+                            <td> Não temos patos cadastrados no momento </td>
+                        </tr>
+                        <tr th:each="duck : ${duckList}">
+                            <td><span th:text="${duck.id}"></span></td>
+                            <td><span th:text="${duck.name}"></span></td>
+                            <td th:each="programmingLanguage : ${duck.programmingLanguages}"><span th:text="${programmingLanguage.name}"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
 </html>

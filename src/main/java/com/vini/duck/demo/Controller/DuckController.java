@@ -25,7 +25,8 @@ public class DuckController {
     private DuckService duckService;
 
     @GetMapping ("/")
-    public String home () {
+    public String home (Model model) {
+        model.addAttribute("duckList", duckService.findAallDucks());
         return "/home";
     }
 

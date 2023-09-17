@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label for="programmingLanguages"> Programming Languages </label>
-                    <select class="form-control" id="programmingLanguages" name="programmingLanguages" th:field="*{programmingLanguages}">
+                    <select class="form-control" id="programmingLanguages" name="programmingLanguages" th:field="*{programmingLanguages}"multiple="multiple">
                         <option th:if="${programmingList.empty}" value="0"> Não tem linguagem </option>
                         <option th:each="language : ${programmingList}" th:value="${language.id}" th:text="${language.name}"></option>
                     </select>

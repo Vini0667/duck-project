@@ -1,5 +1,7 @@
 package com.vini.duck.demo.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,9 @@ public class DuckService {
 
 	public Duck save_duck (Duck duck) {
 		return duckRepository.save(duck);
+	}
+
+	public List<Duck> findAallDucks () {
+		return duckRepository.findAll();
 	}
 }
