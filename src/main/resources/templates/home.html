@@ -16,6 +16,14 @@
                     <a th:href="@{/new_duck}" class="btn btn-primary"> Novo Pato </a>
                 </div>
             </div>
+            <div>
+                <form th:action="@{/find}" method="post">
+                    <label for="find"> Digite o nome de um pato que deseja buscar </label>
+                    <input type="text" name="a" class="form-control">
+                    <input type="submit" class="btn btn-primary">
+                </form>
+                <a th:href="@{/}" class="btn btn-danger" type="submit"> Cancelar busca </a>
+            </div>
             <div class="row">
                 <table class="table table-striped">
                     <thead>
@@ -23,6 +31,8 @@
                             <th> Id </th>
                             <th> Name </th>
                             <th> Programing Language </th>
+                            <th> Apagar </th>
+                            <th> Editar </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +43,8 @@
                             <td><span th:text="${duck.id}"></span></td>
                             <td><span th:text="${duck.name}"></span></td>
                             <td th:each="programmingLanguage : ${duck.programmingLanguages}"><span th:text="${programmingLanguage.name}"></span></td>
+                            <td> <a class="bi bi-trash" th:href="@{/delete/{id}(id=${duck.id})}" th:data-confirm-delete="|Você gostaria de apagar o patinho ${duck.name}?|" th:onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false"> &#xF5DE; </a> </td>
+                            <td> <a th:href="@{/edit/{id}(id=${duck.id})}"> Editar </a> </td>
                         </tr>
                     </tbody>
                 </table>
