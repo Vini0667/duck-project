@@ -1,16 +1,13 @@
 package com.vini.duck.demo.Model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
-import java.util.List;
-import jakarta.persistence.ManyToMany;
+// import java.util.List;
 
 @Entity
 public class Duck {
@@ -22,10 +19,17 @@ public class Duck {
 	@Size (min = 3, message = "O nome deve ter no mínimo 3 caracteres")
 	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable (name = "duck_languages", joinColumns = @JoinColumn(name = "duck_id"), inverseJoinColumns = @JoinColumn(name = "programming_languages_id"))
-	private List<ProgrammingLanguages> programmingLanguages;
+	@OneToOne
+	private Habitat habitat;
 
+	// private List<ProgrammingLanguages> programmingLanguages;
+
+	public Duck () {}
+
+	public Duck(Habitat habitat) {
+		this.habitat = habitat;
+	}
+	
 	public Long getId () {
 		return this.id;
 	}
@@ -42,11 +46,19 @@ public class Duck {
 		this.name = name;
 	}
 
-	public List<ProgrammingLanguages> getProgrammingLanguages() {
-		return programmingLanguages;
+	public Habitat getHabitat() {
+		return habitat;
 	}
 
-	public void setProgrammingLanguages(List<ProgrammingLanguages> programmingLanguages) {
-		this.programmingLanguages = programmingLanguages;
+	public void setHabitat(Habitat habitat) {
+		this.habitat = habitat;
 	}
+
+	// public List<ProgrammingLanguages> getProgrammingLanguages() {
+	// 	return programmingLanguages;
+	// }
+
+	// public void setProgrammingLanguages(List<ProgrammingLanguages> programmingLanguages) {
+	// 	this.programmingLanguages = programmingLanguages;
+	// }
 }

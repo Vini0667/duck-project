@@ -29,10 +29,11 @@
                     <thead>
                         <tr>
                             <th> Id </th>
-                            <th> Name </th>
-                            <th> Programing Language </th>
+                            <th> Nome </th>
+                            <!-- <th> Programming Language </th> -->
                             <th> Apagar </th>
                             <th> Editar </th>
+                            <th> Habitat </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,9 +43,10 @@
                         <tr th:each="duck : ${duckList}">
                             <td><span th:text="${duck.id}"></span></td>
                             <td><span th:text="${duck.name}"></span></td>
-                            <td th:each="programmingLanguage : ${duck.programmingLanguages}"><span th:text="${programmingLanguage.name}"></span></td>
+                            <!-- <td th:each="programmingLanguage : ${duck.programmingLanguages}"><span th:text="${programmingLanguage.name}"></span></td> -->
                             <td> <a class="bi bi-trash" th:href="@{/delete/{id}(id=${duck.id})}" th:data-confirm-delete="|Você gostaria de apagar o patinho ${duck.name}?|" th:onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false"> &#xF5DE; </a> </td>
                             <td> <a th:href="@{/edit/{id}(id=${duck.id})}"> Editar </a> </td>
+                            <td> <a th:href="@{/habitat/findHabitat/{id}(id=${duck.id})}" class="fa-solid fa-house"> Habitat </a></td>
                         </tr>
                     </tbody>
                 </table>
