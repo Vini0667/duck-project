@@ -82,6 +82,7 @@ public class DuckController {
         ProgrammingLanguages pg = programmingLanguagesService.findProgrammingLanguageById(id_language);
         if (errors.hasErrors() || pg == null) {
             model.addAttribute("editDuck", duck);
+            model.addAttribute("languageList", programmingLanguagesService.findProgrammingLanguages());
             return "/edit-duck";
         }
         duck.setProgrammingLanguage(pg);
