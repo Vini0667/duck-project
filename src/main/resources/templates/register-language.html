@@ -10,19 +10,15 @@
     </head>
     <body>
         <div class="container">
-            <h1> Alterar Duck </h1>
-            <form th:action="@{/edit/{id}(id=${editDuck.id})}" method="POST" th:object="${editDuck}">
+            <h1> Register a programming language </h1>
+            <form th:action="@{/language/new}" method="POST" th:object="${language}">
                 <div class="form-group">
                     <label for="name"> Name </label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do pato" th:field="*{name}">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome da linguagem do pato" th:field="*{name}">
                     <div class="col-sm-5">
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                     </div>
                 </div>
-                <select class="form-control" name="id_language" id="id_language">
-                    <option th:if="${languageList} == null" class="form-control" th:value="null"> Sem linguagens disponíveis </option>
-                    <option name="id_language" id="id_language" th:each="language : ${languageList}" class="form-control" th:text="${language.name}" th:value="${language.id}"></option>
-                </select>
                 <br>
                 <button type="submit" class="btn btn-primary"> Register </button>
             </form>

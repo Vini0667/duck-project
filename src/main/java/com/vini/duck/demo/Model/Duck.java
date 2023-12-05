@@ -2,12 +2,12 @@ package com.vini.duck.demo.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
-// import java.util.List;
 
 @Entity
 public class Duck {
@@ -22,7 +22,8 @@ public class Duck {
 	@OneToOne
 	private Habitat habitat;
 
-	// private List<ProgrammingLanguages> programmingLanguages;
+	@ManyToOne
+	private ProgrammingLanguages programmingLanguage;
 
 	public Duck () {}
 
@@ -54,11 +55,11 @@ public class Duck {
 		this.habitat = habitat;
 	}
 
-	// public List<ProgrammingLanguages> getProgrammingLanguages() {
-	// 	return programmingLanguages;
-	// }
+	public ProgrammingLanguages getProgrammingLanguage() {
+		return programmingLanguage;
+	}
 
-	// public void setProgrammingLanguages(List<ProgrammingLanguages> programmingLanguages) {
-	// 	this.programmingLanguages = programmingLanguages;
-	// }
+	public void setProgrammingLanguage(ProgrammingLanguages programmingLanguage) {
+		this.programmingLanguage = programmingLanguage;
+	}
 }

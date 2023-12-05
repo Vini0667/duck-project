@@ -11,8 +11,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vini.duck.demo.Exception.NotFoundDuckException;
 import com.vini.duck.demo.Model.Duck;
+import com.vini.duck.demo.Model.ProgrammingLanguages;
 import com.vini.duck.demo.Service.DuckService;
-// import com.vini.duck.demo.Service.ProgrammingLanguagesService;
+import com.vini.duck.demo.Service.ProgrammingLanguagesService;
 
 import jakarta.validation.Valid;
 
@@ -21,8 +22,8 @@ import org.springframework.validation.BindingResult;
 
 @Controller
 public class DuckController {
-    // @Autowired
-    // private ProgrammingLanguagesService programmingLanguagesService;
+    @Autowired
+    private ProgrammingLanguagesService programmingLanguagesService;
 
     @Autowired
     private DuckService duckService;
@@ -35,17 +36,19 @@ public class DuckController {
 
     @GetMapping ("/new_duck")
     public String registerPage (Model model) {
-        // model.addAttribute("programmingList", programmingLanguagesService.findProgrammingLanguages());
         model.addAttribute("newDuck", new Duck());
+        model.addAttribute("languageList", programmingLanguagesService.findProgrammingLanguages());
         return "/register-duck";
     }
 
     @PostMapping("/new_duck")
-    public String newDuck (@ModelAttribute ("newDuck") @Valid Duck duck, BindingResult errors, RedirectAttributes attr, Model model) {
-        if (errors.hasErrors()) {
-            // model.addAttribute("programmingList", programmingLanguagesService.findProgrammingLanguages());
+    public String newDuck (@ModelAttribute ("newDuck") @Valid Duck duck, BindingResult errors, RedirectAttributes attr, @RequestParam(value = "id_language", required = false) long id_language, Model model) {
+        ProgrammingLanguages pg = programmingLanguagesService.findProgrammingLanguageById(id_language);
+        if (errors.hasErrors() || pg == null) {
+            model.addAttribute("languageList", programmingLanguagesService.findProgrammingLanguages());
             return "/register-duck";
         }
+        duck.setProgrammingLanguage(pg);
         duckService.save_duck(duck);
         attr.addFlashAttribute("msg", "Pato salvo com sucesso");
         return "redirect:/";
@@ -64,8 +67,8 @@ public class DuckController {
     @GetMapping("/edit/{id}")
     public String editDuck (@PathVariable("id") long id, RedirectAttributes rtt, Model model) {
         try {
-            // model.addAttribute("programmingList", programmingLanguagesService.findProgrammingLanguages());
             model.addAttribute("editDuck", duckService.findDuckById(id));
+            model.addAttribute("languageList", programmingLanguagesService.findProgrammingLanguages());
             return "/edit-duck";
         } catch (NotFoundDuckException e) {
             e.printStackTrace();
@@ -74,14 +77,14 @@ public class DuckController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editDuck (@PathVariable("id") long id, @ModelAttribute ("editDuck") @Valid Duck duck, BindingResult errors, RedirectAttributes attr, Model model) {
+    public String editDuck (@PathVariable("id") long id, @ModelAttribute ("editDuck") @Valid Duck duck, BindingResult errors, RedirectAttributes attr, @RequestParam(value = "id_language", required = false) long id_language, Model model) {
         duck.setId(id);
-        if (errors.hasErrors()) {
+        ProgrammingLanguages pg = programmingLanguagesService.findProgrammingLanguageById(id_language);
+        if (errors.hasErrors() || pg == null) {
             model.addAttribute("editDuck", duck);
-            // model.addAttribute("programmingList", programmingLanguagesService.findProgrammingLanguages());
             return "/edit-duck";
         }
-        
+        duck.setProgrammingLanguage(pg);
         duckService.edit_duck(duck);
         return "redirect:/";
     }
